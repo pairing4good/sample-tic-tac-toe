@@ -4,7 +4,7 @@ import platform
 import time
 from os import system
 
-from com.pairgood.wrapper.builtins_wrapper import wrapped_print, wrapped_print_no_return
+from com.pairgood.wrapper.builtins_wrapper import wrapped_print, wrapped_print_no_return, wrapped_input
 
 """
 An implementation of Minimax AI Algorithm in Tic Tac Toe,
@@ -56,7 +56,7 @@ def select_player_order():
     clean()
     while first != 'Y' and first != 'N':
         try:
-            first = input('First to start?[y/n]: ').upper()
+            first = wrapped_input('First to start?[y/n]: ').upper()
         except (EOFError, KeyboardInterrupt):
             wrapped_print('Bye')
             exit()
@@ -78,7 +78,7 @@ def select_human_piece():
     while h_choice != 'O' and h_choice != 'X':
         try:
             wrapped_print('')
-            h_choice = input('Choose X or O\nChosen: ').upper()
+            h_choice = wrapped_input('Choose X or O\nChosen: ').upper()
         except (EOFError, KeyboardInterrupt):
             wrapped_print('Bye')
             exit()
@@ -302,7 +302,7 @@ def human_turn(c_choice, h_choice):
 
     while move < 1 or move > 9:
         try:
-            move = int(input('Use numpad (1..9): '))
+            move = int(wrapped_input('Use numpad (1..9): '))
             coord = moves[move]
             can_move = set_move(coord[0], coord[1], HUMAN)
 
