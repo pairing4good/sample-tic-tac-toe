@@ -4,6 +4,8 @@ import platform
 import time
 from os import system
 
+from com.pairgood.wrapper.builtins_wrapper import wrapped_print, wrapped_print_no_return
+
 """
 An implementation of Minimax AI Algorithm in Tic Tac Toe,
 using Python.
@@ -25,18 +27,18 @@ board = [
 def display_game_over_message(c_choice, h_choice):
     if wins(board, HUMAN):
         clean()
-        print(f'Human turn [{h_choice}]')
+        wrapped_print(f'Human turn [{h_choice}]')
         render(board, c_choice, h_choice)
-        print('YOU WIN!')
+        wrapped_print('YOU WIN!')
     elif wins(board, COMP):
         clean()
-        print(f'Computer turn [{c_choice}]')
+        wrapped_print(f'Computer turn [{c_choice}]')
         render(board, c_choice, h_choice)
-        print('YOU LOSE!')
+        wrapped_print('YOU LOSE!')
     else:
         clean()
         render(board, c_choice, h_choice)
-        print('DRAW!')
+        wrapped_print('DRAW!')
 
 
 def play_game(c_choice, first, h_choice):
@@ -56,10 +58,10 @@ def select_player_order():
         try:
             first = input('First to start?[y/n]: ').upper()
         except (EOFError, KeyboardInterrupt):
-            print('Bye')
+            wrapped_print('Bye')
             exit()
         except (KeyError, ValueError):
-            print('Bad choice')
+            wrapped_print('Bad choice')
     return first
 
 
@@ -75,13 +77,13 @@ def select_human_piece():
     h_choice = ''
     while h_choice != 'O' and h_choice != 'X':
         try:
-            print('')
+            wrapped_print('')
             h_choice = input('Choose X or O\nChosen: ').upper()
         except (EOFError, KeyboardInterrupt):
-            print('Bye')
+            wrapped_print('Bye')
             exit()
         except (KeyError, ValueError):
-            print('Bad choice')
+            wrapped_print('Bad choice')
     return h_choice
 
 
@@ -240,12 +242,12 @@ def render(state, c_choice, h_choice):
     }
     str_line = '---------------'
 
-    print('\n' + str_line)
+    wrapped_print('\n' + str_line)
     for row in state:
         for cell in row:
             symbol = chars[cell]
-            print(f'| {symbol} |', end='')
-        print('\n' + str_line)
+            wrapped_print_no_return(f'| {symbol} |')
+        wrapped_print('\n' + str_line)
 
 
 def ai_turn(c_choice, h_choice):
@@ -261,7 +263,7 @@ def ai_turn(c_choice, h_choice):
         return
 
     clean()
-    print(f'Computer turn [{c_choice}]')
+    wrapped_print(f'Computer turn [{c_choice}]')
     render(board, c_choice, h_choice)
 
     if depth == 9:
@@ -295,7 +297,7 @@ def human_turn(c_choice, h_choice):
     }
 
     clean()
-    print(f'Human turn [{h_choice}]')
+    wrapped_print(f'Human turn [{h_choice}]')
     render(board, c_choice, h_choice)
 
     while move < 1 or move > 9:
@@ -305,10 +307,10 @@ def human_turn(c_choice, h_choice):
             can_move = set_move(coord[0], coord[1], HUMAN)
 
             if not can_move:
-                print('Bad move')
+                wrapped_print('Bad move')
                 move = -1
         except (EOFError, KeyboardInterrupt):
-            print('Bye')
+            wrapped_print('Bye')
             exit()
         except (KeyError, ValueError):
-            print('Bad choice')
+            wrapped_print('Bad choice')
