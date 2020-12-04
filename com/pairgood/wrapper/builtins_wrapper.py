@@ -8,3 +8,7 @@ def wrapped_print_no_return(value):
 
 def wrapped_input(value):
     return input(value)
+
+
+def wrapped_exit():
+    exit()
