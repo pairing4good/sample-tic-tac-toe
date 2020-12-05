@@ -4,101 +4,12 @@ from com.pairgood.game.Game import Game
 from com.pairgood.game.TicTacToe import TicTacToe
 
 
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        expected = """
-Human turn [X]
+class GameAcceptanceTest(unittest.TestCase):
+    def test_full_game(self):
+        with open('test-output.txt', 'r') as file:
+            expected = file.read()
 
----------------
-|   ||   ||   |
----------------
-|   ||   ||   |
----------------
-|   ||   ||   |
----------------
-Computer turn [O]
-
----------------
-|   ||   ||   |
----------------
-|   || X ||   |
----------------
-|   ||   ||   |
----------------
-Human turn [X]
-
----------------
-| O ||   ||   |
----------------
-|   || X ||   |
----------------
-|   ||   ||   |
----------------
-Computer turn [O]
-
----------------
-| O ||   ||   |
----------------
-|   || X ||   |
----------------
-| X ||   ||   |
----------------
-Human turn [X]
-
----------------
-| O ||   || O |
----------------
-|   || X ||   |
----------------
-| X ||   ||   |
----------------
-Computer turn [O]
-
----------------
-| O || X || O |
----------------
-|   || X ||   |
----------------
-| X ||   ||   |
----------------
-Human turn [X]
-
----------------
-| O || X || O |
----------------
-|   || X ||   |
----------------
-| X || O ||   |
----------------
-Computer turn [O]
-
----------------
-| O || X || O |
----------------
-|   || X ||   |
----------------
-| X || O || X |
----------------
-Human turn [X]
-
----------------
-| O || X || O |
----------------
-| O || X ||   |
----------------
-| X || O || X |
----------------
-
----------------
-| O || X || O |
----------------
-| O || X || X |
----------------
-| X || O || X |
----------------
-DRAW!
-"""
-        stub_built_ins_wrapper = StubBuiltInsWrapper()
+        stub_built_ins_wrapper = StubBuiltInsWrapper(['bad', 'X', 'wrong', 'y', 'not a number', 5, 7, 2, 9, 6])
         game = Game(TicTacToe(stub_built_ins_wrapper))
 
         game.play()
@@ -111,21 +22,25 @@ if __name__ == '__main__':
 
 
 class StubBuiltInsWrapper:
-    prints = ''
-    recorded_inputs = ['X', 'y', 5, 7, 2, 9, 6]
+    console = ''
+    recorded_inputs = []
+
+    def __init__(self, recorded_inputs):
+        self.recorded_inputs = recorded_inputs
 
     def wrapped_print(self, value):
-        self.prints += (value + '\n')
+        self.console += (value + '\n')
 
     def wrapped_print_no_return(self, value):
-        self.prints += value
+        self.console += value
 
     def wrapped_input(self, value):
-        return self.recorded_inputs.pop(0)
+        out = self.recorded_inputs.pop(0)
+        self.console += (value + str(out) + '\n')
+        return out
 
     def wrapped_exit(self):
         return
 
     def actual_console(self):
-        return self.prints
-
+        return self.console
