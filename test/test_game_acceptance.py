@@ -13,7 +13,7 @@ class GameAcceptanceTest(unittest.TestCase):
             expected = file.read()
 
         stub_built_ins_wrapper = StubBuiltInsWrapper(['bad', 'X', 'wrong', 'y', 'not a number', 5, 7, 2, 9, 6])
-        game = Game(TicTacToe(stub_built_ins_wrapper, Console(stub_built_ins_wrapper)))
+        game = Game(TicTacToe(Console(stub_built_ins_wrapper)))
 
         game.play()
 

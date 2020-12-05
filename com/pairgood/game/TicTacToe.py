@@ -5,16 +5,13 @@ import time
 from os import system
 
 from com.pairgood.game.Console import Console
-from com.pairgood.wrapper.BuiltInsWrapper import BuiltInsWrapper
 
 
 class TicTacToe:
 
-    built_ins_wrapper: BuiltInsWrapper
     console: Console
 
-    def __init__(self, built_ins_wrapper, console):
-        self.built_ins_wrapper = built_ins_wrapper
+    def __init__(self, console):
         self.console = console
 
     HUMAN = -1
@@ -31,41 +28,41 @@ class TicTacToe:
             self.clean()
             self.console.display_human_turn(h_choice)
             self.render(self.board, c_choice, h_choice)
-            self.built_ins_wrapper.wrapped_print('YOU WIN!')
+            self.console.display_win()
         elif self.wins(self.board, self.COMP):
             self.clean()
             self.console.display_computer_turn(c_choice)
             self.render(self.board, c_choice, h_choice)
-            self.built_ins_wrapper.wrapped_print('YOU LOSE!')
+            self.console.display_lose()
         else:
             self.clean()
             self.render(self.board, c_choice, h_choice)
-            self.built_ins_wrapper.wrapped_print('DRAW!')
+            self.console.display_draw()
 
     def select_player_order(self):
         first = ''
         self.clean()
         while first != 'Y' and first != 'N':
             try:
-                first = self.built_ins_wrapper.wrapped_input('First to start?[y/n]: ').upper()
+                first = self.console.request_player_order()
             except (EOFError, KeyboardInterrupt):
-                self.built_ins_wrapper.wrapped_print('Bye')
+                self.console.display_bye()
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
-                self.built_ins_wrapper.wrapped_print('Bad choice')
+                self.console.display_bad_choice()
         return first
 
     def select_human_piece(self):
         h_choice = ''
         while h_choice != 'O' and h_choice != 'X':
             try:
-                self.built_ins_wrapper.wrapped_print('')
-                h_choice = self.built_ins_wrapper.wrapped_input('Choose X or O\nChosen: ').upper()
+                self.console.display_empty_line()
+                h_choice = self.console.request_player_piece()
             except (EOFError, KeyboardInterrupt):
-                self.built_ins_wrapper.wrapped_print('Bye')
+                self.console.display_bye()
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
-                self.built_ins_wrapper.wrapped_print('Bad choice')
+                self.console.display_bad_choice()
         return h_choice
 
     def render(self, state, c_choice, h_choice):
@@ -81,14 +78,12 @@ class TicTacToe:
             +1: c_choice,
             0: ' '
         }
-        str_line = '---------------'
-
-        self.built_ins_wrapper.wrapped_print('\n' + str_line)
+        self.console.display_line()
         for row in state:
             for cell in row:
                 symbol = chars[cell]
-                self.built_ins_wrapper.wrapped_print_no_return(f'| {symbol} |')
-            self.built_ins_wrapper.wrapped_print('\n' + str_line)
+                self.console.display_square_with(symbol)
+            self.console.display_line()
 
     def human_turn(self, c_choice, h_choice):
         """
@@ -115,18 +110,18 @@ class TicTacToe:
 
         while move < 1 or move > 9:
             try:
-                move = int(self.built_ins_wrapper.wrapped_input('Use numpad (1..9): '))
+                move = self.console.request_move()
                 coord = moves[move]
                 can_move = self.set_move(coord[0], coord[1], self.HUMAN)
 
                 if not can_move:
-                    self.built_ins_wrapper.wrapped_print('Bad move')
+                    self.console.display_bad_move()
                     move = -1
             except (EOFError, KeyboardInterrupt):
-                self.built_ins_wrapper.wrapped_print('Bye')
+                self.console.display_bye()
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
-                self.built_ins_wrapper.wrapped_print('Bad choice')
+                self.console.display_bad_choice()
 
     def play_game(self, c_choice, first, h_choice):
         while len(self.empty_cells(self.board)) > 0 and not self.game_over(self.board):

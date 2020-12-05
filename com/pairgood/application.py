@@ -6,7 +6,7 @@ from com.pairgood.wrapper.BuiltInsWrapper import BuiltInsWrapper
 
 def main():
     wrapper = BuiltInsWrapper()
-    game = Game(TicTacToe(wrapper, Console(wrapper)))
+    game = Game(TicTacToe(Console(wrapper)))
     game.play()
     exit()
 
