@@ -13,13 +13,3 @@ class BuiltInsWrapper:
 
     def wrapped_exit(self):
         exit()
-
-    def clean(self):
-        """
-        Clears the console
-        """
-        os_name = platform.system().lower()
-        if 'windows' in os_name:
-            system('cls')
-        else:
-            system('clear')

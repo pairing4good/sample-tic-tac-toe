@@ -22,6 +22,3 @@ class StubBuiltInsWrapper:
 
     def actual_console(self):
         return self.console
-
-    def clean(self):
-        return

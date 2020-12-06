@@ -33,23 +33,19 @@ class TicTacToe:
     def display_game_over_message(self, c_choice, h_choice):
 
         if self.board.wins(Human.HUMAN):
-            self.built_ins_wrapper.clean()
             self.console.display_human_turn(h_choice)
             self.board.render(c_choice, h_choice)
             self.console.display_win()
         elif self.board.wins(Computer.COMP):
-            self.built_ins_wrapper.clean()
             self.console.display_computer_turn(c_choice)
             self.board.render(c_choice, h_choice)
             self.console.display_lose()
         else:
-            self.built_ins_wrapper.clean()
             self.board.render(c_choice, h_choice)
             self.console.display_draw()
 
     def select_player_order(self):
         first = ''
-        self.built_ins_wrapper.clean()
         while first != 'Y' and first != 'N':
             try:
                 first = self.console.request_player_order()
@@ -92,7 +88,6 @@ class TicTacToe:
         if depth == 0 or self.board.game_over():
             return
 
-        self.built_ins_wrapper.clean()
         self.console.display_computer_turn(c_choice)
         self.board.render(c_choice, h_choice)
 
@@ -174,7 +169,6 @@ class TicTacToe:
             7: [2, 0], 8: [2, 1], 9: [2, 2],
         }
 
-        self.built_ins_wrapper.clean()
         self.console.display_human_turn(h_choice)
         self.board.render(c_choice, h_choice)
 
@@ -192,6 +186,3 @@ class TicTacToe:
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
                 self.console.display_bad_choice()
-
-    def clean(self):
-        self.built_ins_wrapper.clean()
