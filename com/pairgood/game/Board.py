@@ -16,11 +16,6 @@ class Board:
     ]
 
     def empty_cells(self):
-        """
-        Each empty cell will be added into cells' list
-        :param state: the state of the current board
-        :return: a list of empty cells
-        """
         cells = []
 
         for x, row in enumerate(self.board):
@@ -31,20 +26,9 @@ class Board:
         return cells
 
     def game_over(self):
-        """
-        This function test if the human or computer wins
-        :param state: the state of the current board
-        :return: True if the human or computer wins
-        """
         return self.wins(Human.HUMAN) or self.wins(Computer.COMP)
 
     def set_move(self, x, y, player):
-        """
-        Set the move on board, if the coordinates are valid
-        :param x: X coordinate
-        :param y: Y coordinate
-        :param player: the current player
-        """
         if self.valid_move(x, y):
             self.board[x][y] = player
             return True
@@ -52,15 +36,6 @@ class Board:
             return False
 
     def wins(self, player):
-        """
-        This function tests if a specific player wins. Possibilities:
-        * Three rows    [X X X] or [O O O]
-        * Three cols    [X X X] or [O O O]
-        * Two diagonals [X X X] or [O O O]
-        :param state: the state of the current board
-        :param player: a human or a computer
-        :return: True if the player wins
-        """
         state = self.board
 
         win_state = [
@@ -79,12 +54,6 @@ class Board:
             return False
 
     def valid_move(self, x, y):
-        """
-        A move is valid if the chosen cell is empty
-        :param x: X coordinate
-        :param y: Y coordinate
-        :return: True if the board[x][y] is empty
-        """
         if [x, y] in self.empty_cells():
             return True
         else:

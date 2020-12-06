@@ -65,37 +65,7 @@ class TicTacToe:
         else:
             self.computer.set_piece('X')
 
-    def ai_turn(self):
-        """
-        It calls the minimax function if the depth < 9,
-        else it choices a random coordinate.
-        :param c_choice: computer's choice X or O
-        :param h_choice: human's choice X or O
-        :return:
-        """
-        depth = len(self.board.empty_cells())
-        if depth == 0 or self.board.game_over():
-            return
-
-        self.console.display_computer_turn(self.computer.get_piece())
-        self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
-
-        if depth == 9:
-            x = self.choice_wrapper.choice([0, 1, 2])
-            y = self.choice_wrapper.choice([0, 1, 2])
-        else:
-            move = self.minimax(depth, Computer.COMP)
-            x, y = move[0], move[1]
-
-        self.board.set_move(x, y, Computer.COMP)
-        self.time_wrapper.sleep(1)
-
     def evaluate(self):
-        """
-        Function to heuristic evaluation of state.
-        :param state: the state of the current board
-        :return: +1 if the computer wins; -1 if the human wins; 0 draw
-        """
         if self.board.wins(Computer.COMP):
             score = +1
         elif self.board.wins(Human.HUMAN):
@@ -106,14 +76,6 @@ class TicTacToe:
         return score
 
     def minimax(self, depth, player):
-        """
-        AI function that choice the best move
-        :param state: current state of the board
-        :param depth: node index in the tree (0 <= depth <= 9),
-        but never nine in this case (see iaturn() function)
-        :param player: an human or a computer
-        :return: a list with [the best row, best col, best score]
-        """
         if player == Computer.COMP:
             best = [-1, -1, -infinity]
         else:
@@ -139,13 +101,25 @@ class TicTacToe:
 
         return best
 
+    def ai_turn(self):
+        depth = len(self.board.empty_cells())
+        if depth == 0 or self.board.game_over():
+            return
+
+        self.console.display_computer_turn(self.computer.get_piece())
+        self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
+
+        if depth == 9:
+            x = self.choice_wrapper.choice([0, 1, 2])
+            y = self.choice_wrapper.choice([0, 1, 2])
+        else:
+            move = self.minimax(depth, Computer.COMP)
+            x, y = move[0], move[1]
+
+        self.board.set_move(x, y, Computer.COMP)
+        self.time_wrapper.sleep(1)
+
     def human_turn(self):
-        """
-        The Human plays choosing a valid move.
-        :param c_choice: computer's choice X or O
-        :param h_choice: human's choice X or O
-        :return:
-        """
         depth = len(self.board.empty_cells())
         if depth == 0 or self.board.game_over():
             return
