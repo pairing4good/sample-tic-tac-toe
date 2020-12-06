@@ -2,12 +2,11 @@ from com.pairgood.game.TicTacToe import TicTacToe
 
 
 class Game:
-    
     tic_tac_toe: TicTacToe
 
     def __init__(self, tic_tac_toe):
         self.tic_tac_toe = tic_tac_toe
-        
+
     def play(self):
         self.tic_tac_toe.clean()
 
