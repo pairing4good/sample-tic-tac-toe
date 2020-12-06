@@ -1,5 +1,4 @@
 from math import inf as infinity
-from random import choice
 import time
 
 from com.pairgood.game.Board import Board
@@ -7,6 +6,7 @@ from com.pairgood.game.Console import Console
 from com.pairgood.game.player.Computer import Computer
 from com.pairgood.game.player.Human import Human
 from com.pairgood.wrapper.BuiltInsWrapper import BuiltInsWrapper
+from com.pairgood.wrapper.choice_wrapper import ChoiceWrapper
 
 
 class TicTacToe:
@@ -14,12 +14,14 @@ class TicTacToe:
     board: Board
     human: Human
     built_ins_wrapper: BuiltInsWrapper
+    choice_wrapper: ChoiceWrapper
 
-    def __init__(self, console, board, human, built_ins_wrapper):
+    def __init__(self, console, board, human, built_ins_wrapper, choice_wrapper):
         self.console = console
         self.board = board
         self.human = human
         self.built_ins_wrapper = built_ins_wrapper
+        self.choice_wrapper = choice_wrapper
 
     def play_game(self, c_choice, first, h_choice):
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
@@ -92,8 +94,8 @@ class TicTacToe:
         self.console.display_board(self.board.get_board(), c_choice, h_choice)
 
         if depth == 9:
-            x = choice([0, 1, 2])
-            y = choice([0, 1, 2])
+            x = self.choice_wrapper.choice([0, 1, 2])
+            y = self.choice_wrapper.choice([0, 1, 2])
         else:
             move = self.minimax(depth, Computer.COMP)
             x, y = move[0], move[1]
