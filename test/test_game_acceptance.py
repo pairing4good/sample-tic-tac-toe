@@ -7,8 +7,9 @@ from com.pairgood.game.Game import Game
 from com.pairgood.game.TicTacToe import TicTacToe
 from com.pairgood.game.player.Computer import Computer
 from com.pairgood.game.player.Human import Human
-from test.StubBuiltInsWrapper import StubBuiltInsWrapper
-from test.StubChoiceWrapper import StubChoiceWrapper
+from test.stub.StubBuiltInsWrapper import StubBuiltInsWrapper
+from test.stub.StubChoiceWrapper import StubChoiceWrapper
+from test.stub.StubTimeWrapper import StubTimeWrapper
 
 
 class GameAcceptanceTest(unittest.TestCase):
@@ -20,7 +21,8 @@ class GameAcceptanceTest(unittest.TestCase):
         stub_built_ins_wrapper = StubBuiltInsWrapper(['bad', 'X', 'wrong', 'y', 'not a number', 5, 7, 2, 9, 6])
         stub_choice_wrapper = StubChoiceWrapper([])
         console = Console(stub_built_ins_wrapper)
-        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper))
+        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+                              StubTimeWrapper()))
 
         game.play()
 
@@ -34,7 +36,8 @@ class GameAcceptanceTest(unittest.TestCase):
         stub_built_ins_wrapper = StubBuiltInsWrapper(['O', 'n', 9, 8, 7])
         stub_choice_wrapper = StubChoiceWrapper([0, 0])
         console = Console(stub_built_ins_wrapper)
-        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper))
+        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+                              StubTimeWrapper()))
 
         game.play()
 
@@ -59,7 +62,8 @@ class GameAcceptanceTest(unittest.TestCase):
         [0, comp, 0],
         [human, 0, comp],
     ]
-        game = Game(TicTacToe(console, board, Human(), stub_built_ins_wrapper, stub_choice_wrapper))
+        game = Game(TicTacToe(console, board, Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+                              StubTimeWrapper()))
 
         game.play()
 

@@ -6,6 +6,7 @@ from com.pairgood.game.Console import Console
 from com.pairgood.game.player.Computer import Computer
 from com.pairgood.game.player.Human import Human
 from com.pairgood.wrapper.BuiltInsWrapper import BuiltInsWrapper
+from com.pairgood.wrapper.TimeWrapper import TimeWrapper
 from com.pairgood.wrapper.choice_wrapper import ChoiceWrapper
 
 
@@ -15,13 +16,15 @@ class TicTacToe:
     human: Human
     built_ins_wrapper: BuiltInsWrapper
     choice_wrapper: ChoiceWrapper
+    time_wrapper: TimeWrapper
 
-    def __init__(self, console, board, human, built_ins_wrapper, choice_wrapper):
+    def __init__(self, console, board, human, built_ins_wrapper, choice_wrapper, time_wrapper):
         self.console = console
         self.board = board
         self.human = human
         self.built_ins_wrapper = built_ins_wrapper
         self.choice_wrapper = choice_wrapper
+        self.time_wrapper = time_wrapper
 
     def play_game(self, c_choice, first):
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
@@ -101,7 +104,7 @@ class TicTacToe:
             x, y = move[0], move[1]
 
         self.board.set_move(x, y, Computer.COMP)
-        time.sleep(1)
+        self.time_wrapper.sleep(1)
 
     def evaluate(self):
         """

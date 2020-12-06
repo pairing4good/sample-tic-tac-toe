@@ -3,7 +3,7 @@ import unittest
 from com.pairgood.game.Console import Console
 from com.pairgood.game.player.Computer import Computer
 from com.pairgood.game.player.Human import Human
-from test.StubBuiltInsWrapper import StubBuiltInsWrapper
+from test.stub.StubBuiltInsWrapper import StubBuiltInsWrapper
 
 
 class ConsoleTest(unittest.TestCase):
