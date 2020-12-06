@@ -1,5 +1,4 @@
 from math import inf as infinity
-import time
 
 from com.pairgood.game.Board import Board
 from com.pairgood.game.Console import Console
@@ -14,39 +13,41 @@ class TicTacToe:
     console: Console
     board: Board
     human: Human
+    computer: Computer
     built_ins_wrapper: BuiltInsWrapper
     choice_wrapper: ChoiceWrapper
     time_wrapper: TimeWrapper
 
-    def __init__(self, console, board, human, built_ins_wrapper, choice_wrapper, time_wrapper):
+    def __init__(self, console, board, human, computer, built_ins_wrapper, choice_wrapper, time_wrapper):
         self.console = console
         self.board = board
         self.human = human
+        self.computer = computer
         self.built_ins_wrapper = built_ins_wrapper
         self.choice_wrapper = choice_wrapper
         self.time_wrapper = time_wrapper
 
-    def play_game(self, c_choice, first):
+    def play_game(self, first):
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
             if first == 'N':
-                self.ai_turn(c_choice)
+                self.ai_turn()
                 first = ''
 
-            self.human_turn(c_choice)
-            self.ai_turn(c_choice)
+            self.human_turn()
+            self.ai_turn()
 
-    def display_game_over_message(self, c_choice):
+    def display_game_over_message(self):
 
         if self.board.wins(Human.HUMAN):
             self.console.display_human_turn(self.human.get_piece())
-            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
+            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
             self.console.display_win()
         elif self.board.wins(Computer.COMP):
-            self.console.display_computer_turn(c_choice)
-            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
+            self.console.display_computer_turn(self.computer.get_piece())
+            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
             self.console.display_lose()
         else:
-            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
+            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
             self.console.display_draw()
 
     def select_player_order(self):
@@ -76,12 +77,11 @@ class TicTacToe:
 
     def select_computer_piece(self):
         if self.human.get_piece() == 'X':
-            c_choice = 'O'
+            self.computer.set_piece('O')
         else:
-            c_choice = 'X'
-        return c_choice
+            self.computer.set_piece('X')
 
-    def ai_turn(self, c_choice):
+    def ai_turn(self):
         """
         It calls the minimax function if the depth < 9,
         else it choices a random coordinate.
@@ -93,8 +93,8 @@ class TicTacToe:
         if depth == 0 or self.board.game_over():
             return
 
-        self.console.display_computer_turn(c_choice)
-        self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
+        self.console.display_computer_turn(self.computer.get_piece())
+        self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
 
         if depth == 9:
             x = self.choice_wrapper.choice([0, 1, 2])
@@ -155,7 +155,7 @@ class TicTacToe:
 
         return best
 
-    def human_turn(self, c_choice):
+    def human_turn(self):
         """
         The Human plays choosing a valid move.
         :param c_choice: computer's choice X or O
@@ -175,7 +175,7 @@ class TicTacToe:
         }
 
         self.console.display_human_turn(self.human.get_piece())
-        self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
+        self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
 
         while move < 1 or move > 9:
             try:

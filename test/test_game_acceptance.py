@@ -21,7 +21,7 @@ class GameAcceptanceTest(unittest.TestCase):
         stub_built_ins_wrapper = StubBuiltInsWrapper(['bad', 'X', 'wrong', 'y', 'not a number', 5, 7, 2, 9, 6])
         stub_choice_wrapper = StubChoiceWrapper([])
         console = Console(stub_built_ins_wrapper)
-        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+        game = Game(TicTacToe(console, Board(console), Human(), Computer(), stub_built_ins_wrapper, stub_choice_wrapper,
                               StubTimeWrapper()))
 
         game.play()
@@ -36,7 +36,7 @@ class GameAcceptanceTest(unittest.TestCase):
         stub_built_ins_wrapper = StubBuiltInsWrapper(['O', 'n', 9, 8, 7])
         stub_choice_wrapper = StubChoiceWrapper([0, 0])
         console = Console(stub_built_ins_wrapper)
-        game = Game(TicTacToe(console, Board(console), Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+        game = Game(TicTacToe(console, Board(console), Human(), Computer(), stub_built_ins_wrapper, stub_choice_wrapper,
                               StubTimeWrapper()))
 
         game.play()
@@ -62,7 +62,7 @@ class GameAcceptanceTest(unittest.TestCase):
         [0, comp, 0],
         [human, 0, comp],
     ]
-        game = Game(TicTacToe(console, board, Human(), stub_built_ins_wrapper, stub_choice_wrapper,
+        game = Game(TicTacToe(console, board, Human(), Computer(), stub_built_ins_wrapper, stub_choice_wrapper,
                               StubTimeWrapper()))
 
         game.play()
