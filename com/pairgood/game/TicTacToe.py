@@ -28,7 +28,7 @@ class TicTacToe:
         self.time_wrapper = time_wrapper
 
     def play_game(self):
-        if not self.human.get_first():
+        if not self.human.is_first():
             self.ai_turn()
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
             self.human_turn()

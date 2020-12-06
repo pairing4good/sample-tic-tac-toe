@@ -13,5 +13,5 @@ class Human:
     def set_first(self, first):
         self.first = first
 
-    def get_first(self):
+    def is_first(self):
         return self.first
