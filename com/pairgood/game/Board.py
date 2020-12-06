@@ -4,16 +4,16 @@ from com.pairgood.game.player.Human import Human
 
 
 class Board:
-    board = [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-    ]
-
+    board: None
     console: Console
 
     def __init__(self, console):
         self.console = console
+        self.board = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ]
 
     def empty_cells(self):
         """

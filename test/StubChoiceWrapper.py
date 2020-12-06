@@ -5,4 +5,4 @@ class StubChoiceWrapper:
         self.answers = answers
 
     def choice(self, seq):
-        self.answers.pop(0)
+        return self.answers.pop(0)
