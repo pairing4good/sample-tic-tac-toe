@@ -1,3 +1,5 @@
+from com.pairgood.game.player.Computer import Computer
+from com.pairgood.game.player.Human import Human
 from com.pairgood.wrapper.BuiltInsWrapper import BuiltInsWrapper
 
 
@@ -51,8 +53,8 @@ class Console:
 
     def display_board(self, board, c_choice, h_choice):
         chars = {
-            -1: h_choice,
-            +1: c_choice,
+            Human.HUMAN: h_choice,
+            Computer.COMP: c_choice,
             0: ' '
         }
         self.display_line()
