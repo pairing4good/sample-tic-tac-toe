@@ -41,7 +41,7 @@ class TicTacToe:
             self.board.render(c_choice, h_choice)
             self.console.display_lose()
         else:
-            self.board.render(c_choice, h_choice)
+            self.console.display_board(self.board.get_board(), c_choice, h_choice)
             self.console.display_draw()
 
     def select_player_order(self):
@@ -89,7 +89,7 @@ class TicTacToe:
             return
 
         self.console.display_computer_turn(c_choice)
-        self.board.render(c_choice, h_choice)
+        self.console.display_board(self.board.get_board(), c_choice, h_choice)
 
         if depth == 9:
             x = choice([0, 1, 2])
@@ -170,7 +170,7 @@ class TicTacToe:
         }
 
         self.console.display_human_turn(h_choice)
-        self.board.render(c_choice, h_choice)
+        self.console.display_board(self.board.get_board(), c_choice, h_choice)
 
         while move < 1 or move > 9:
             try:

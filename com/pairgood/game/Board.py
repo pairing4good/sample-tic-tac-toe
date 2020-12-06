@@ -15,26 +15,6 @@ class Board:
     def __init__(self, console):
         self.console = console
 
-    def render(self, c_choice, h_choice):
-        """
-        Print the board on console
-        :param h_choice:
-        :param c_choice:
-        :param state: current state of the board
-        """
-
-        chars = {
-            -1: h_choice,
-            +1: c_choice,
-            0: ' '
-        }
-        self.console.display_line()
-        for row in self.board:
-            for cell in row:
-                symbol = chars[cell]
-                self.console.display_square_with(symbol)
-            self.console.display_line()
-
     def empty_cells(self):
         """
         Each empty cell will be added into cells' list

@@ -1,6 +1,8 @@
 import unittest
 
 from com.pairgood.game.Console import Console
+from com.pairgood.game.player.Computer import Computer
+from com.pairgood.game.player.Human import Human
 from test.StubBuiltInsWrapper import StubBuiltInsWrapper
 
 
@@ -139,6 +141,106 @@ class ConsoleTest(unittest.TestCase):
         self.console.display_win()
 
         self.assertEqual('YOU WIN!\n', self.wrapper.actual_console())
+
+    def test_should_display_board_when_no_turns_played(self):
+        self.assertEqual('', self.wrapper.actual_console())
+
+        board = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ]
+
+        expected = '''
+---------------
+|   ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+'''
+
+        self.console.display_board(board, 'X', 'O')
+
+        self.assertEqual(expected, self.wrapper.actual_console())
+
+    def test_should_display_board_when_computer_played_with_x(self):
+        self.assertEqual('', self.wrapper.actual_console())
+
+        comp = Computer.COMP
+
+        board = [
+            [comp, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ]
+
+        expected = '''
+---------------
+| X ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+'''
+
+        self.console.display_board(board, 'X', 'O')
+
+        self.assertEqual(expected, self.wrapper.actual_console())
+
+    def test_should_display_board_when_human_played_with_o(self):
+        self.assertEqual('', self.wrapper.actual_console())
+
+        human = Human.HUMAN
+
+        board = [
+            [human, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ]
+
+        expected = '''
+---------------
+| O ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+|   ||   ||   |
+---------------
+'''
+
+        self.console.display_board(board, 'X', 'O')
+
+        self.assertEqual(expected, self.wrapper.actual_console())
+
+    def test_should_display_board_when_both_human_and_computer_played(self):
+        self.assertEqual('', self.wrapper.actual_console())
+
+        human = Human.HUMAN
+        comp = Computer.COMP
+
+        board = [
+            [human, comp, human],
+            [comp, comp, 0],
+            [human, human, 0],
+        ]
+
+        expected = '''
+---------------
+| O || X || O |
+---------------
+| X || X ||   |
+---------------
+| O || O ||   |
+---------------
+'''
+
+        self.console.display_board(board, 'X', 'O')
+
+        self.assertEqual(expected, self.wrapper.actual_console())
+
 
 
 if __name__ == '__main__':

@@ -48,3 +48,16 @@ class Console:
 
     def request_player_piece(self):
         return self.built_ins_wrapper.wrapped_input('Choose X or O\nChosen: ').upper()
+
+    def display_board(self, board, c_choice, h_choice):
+        chars = {
+            -1: h_choice,
+            +1: c_choice,
+            0: ' '
+        }
+        self.display_line()
+        for row in board:
+            for cell in row:
+                symbol = chars[cell]
+                self.display_square_with(symbol)
+            self.display_line()
