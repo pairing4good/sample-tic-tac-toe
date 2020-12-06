@@ -12,9 +12,9 @@ from test.StubChoiceWrapper import StubChoiceWrapper
 
 
 class GameAcceptanceTest(unittest.TestCase):
-    def test_full_game(self):
+    def test_full_game_that_ends_in_a_draw(self):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + '/test-output.txt', 'r') as file:
+        with open(dir_path + '/test-draw-output.txt', 'r') as file:
             expected = file.read()
 
         stub_built_ins_wrapper = StubBuiltInsWrapper(['bad', 'X', 'wrong', 'y', 'not a number', 5, 7, 2, 9, 6])

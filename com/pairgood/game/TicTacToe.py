@@ -23,27 +23,27 @@ class TicTacToe:
         self.built_ins_wrapper = built_ins_wrapper
         self.choice_wrapper = choice_wrapper
 
-    def play_game(self, c_choice, first, h_choice):
+    def play_game(self, c_choice, first):
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
             if first == 'N':
-                self.ai_turn(c_choice, h_choice)
+                self.ai_turn(c_choice)
                 first = ''
 
-            self.human_turn(c_choice, h_choice)
-            self.ai_turn(c_choice, h_choice)
+            self.human_turn(c_choice)
+            self.ai_turn(c_choice)
 
-    def display_game_over_message(self, c_choice, h_choice):
+    def display_game_over_message(self, c_choice):
 
         if self.board.wins(Human.HUMAN):
-            self.console.display_human_turn(h_choice)
-            self.board.render(c_choice, h_choice)
+            self.console.display_human_turn(self.human.get_piece())
+            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
             self.console.display_win()
         elif self.board.wins(Computer.COMP):
             self.console.display_computer_turn(c_choice)
-            self.board.render(c_choice, h_choice)
+            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
             self.console.display_lose()
         else:
-            self.console.display_board(self.board.get_board(), c_choice, h_choice)
+            self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
             self.console.display_draw()
 
     def select_player_order(self):
@@ -69,16 +69,16 @@ class TicTacToe:
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
                 self.console.display_bad_choice()
-        return h_choice
+        self.human.set_piece(h_choice)
 
-    def select_computer_piece(self, h_choice):
-        if h_choice == 'X':
+    def select_computer_piece(self):
+        if self.human.get_piece() == 'X':
             c_choice = 'O'
         else:
             c_choice = 'X'
         return c_choice
 
-    def ai_turn(self, c_choice, h_choice):
+    def ai_turn(self, c_choice):
         """
         It calls the minimax function if the depth < 9,
         else it choices a random coordinate.
@@ -91,7 +91,7 @@ class TicTacToe:
             return
 
         self.console.display_computer_turn(c_choice)
-        self.console.display_board(self.board.get_board(), c_choice, h_choice)
+        self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
 
         if depth == 9:
             x = self.choice_wrapper.choice([0, 1, 2])
@@ -152,7 +152,7 @@ class TicTacToe:
 
         return best
 
-    def human_turn(self, c_choice, h_choice):
+    def human_turn(self, c_choice):
         """
         The Human plays choosing a valid move.
         :param c_choice: computer's choice X or O
@@ -171,8 +171,8 @@ class TicTacToe:
             7: [2, 0], 8: [2, 1], 9: [2, 2],
         }
 
-        self.console.display_human_turn(h_choice)
-        self.console.display_board(self.board.get_board(), c_choice, h_choice)
+        self.console.display_human_turn(self.human.get_piece())
+        self.console.display_board(self.board.get_board(), c_choice, self.human.get_piece())
 
         while move < 1 or move > 9:
             try:
