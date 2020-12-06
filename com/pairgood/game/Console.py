@@ -63,3 +63,17 @@ class Console:
                 symbol = chars[cell]
                 self.display_square_with(symbol)
             self.display_line()
+
+    def display_game_over_message(self, board, human, computer):
+
+        if board.wins(Human.HUMAN):
+            self.display_human_turn(human.get_piece())
+            self.display_board(board.get_board(), computer.get_piece(), human.get_piece())
+            self.display_win()
+        elif board.wins(Computer.COMP):
+            self.display_computer_turn(computer.get_piece())
+            self.display_board(board.get_board(), computer.get_piece(), human.get_piece())
+            self.display_lose()
+        else:
+            self.display_board(board.get_board(), computer.get_piece(), human.get_piece())
+            self.display_draw()

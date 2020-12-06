@@ -34,20 +34,6 @@ class TicTacToe:
             self.human_turn()
             self.ai_turn()
 
-    def display_game_over_message(self):
-
-        if self.board.wins(Human.HUMAN):
-            self.console.display_human_turn(self.human.get_piece())
-            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
-            self.console.display_win()
-        elif self.board.wins(Computer.COMP):
-            self.console.display_computer_turn(self.computer.get_piece())
-            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
-            self.console.display_lose()
-        else:
-            self.console.display_board(self.board.get_board(), self.computer.get_piece(), self.human.get_piece())
-            self.console.display_draw()
-
     def select_player_order(self):
         first = ''
         while first != 'Y' and first != 'N':
@@ -189,3 +175,6 @@ class TicTacToe:
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
                 self.console.display_bad_choice()
+
+    def display_game_over_message(self):
+        self.console.display_game_over_message(self.board, self.human, self.computer)
