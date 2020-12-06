@@ -10,8 +10,8 @@ class Game:
     def play(self):
         self.tic_tac_toe.select_human_piece()
         self.tic_tac_toe.select_computer_piece()
-        first = self.tic_tac_toe.select_player_order()
+        self.tic_tac_toe.select_player_order()
 
-        self.tic_tac_toe.play_game(first)
+        self.tic_tac_toe.play_game()
 
         self.tic_tac_toe.display_game_over_message()

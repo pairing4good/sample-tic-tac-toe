@@ -27,12 +27,10 @@ class TicTacToe:
         self.choice_wrapper = choice_wrapper
         self.time_wrapper = time_wrapper
 
-    def play_game(self, first):
+    def play_game(self):
+        if not self.human.get_first():
+            self.ai_turn()
         while len(self.board.empty_cells()) > 0 and not self.board.game_over():
-            if first == 'N':
-                self.ai_turn()
-                first = ''
-
             self.human_turn()
             self.ai_turn()
 
@@ -60,7 +58,7 @@ class TicTacToe:
                 self.built_ins_wrapper.wrapped_exit()
             except (KeyError, ValueError):
                 self.console.display_bad_choice()
-        return first
+        self.human.set_first(first == 'Y')
 
     def select_human_piece(self):
         h_choice = ''
